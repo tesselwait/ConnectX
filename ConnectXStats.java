@@ -5,7 +5,7 @@ public class ConnectXStats//Default parameters take ~10 minutes to run.
 	private int subSampleSize, winNum, boardMultiplier, offsetDivisor;
 	private int winNumMax, boardMultiMax;
 	private int offset;
-	private ConnectBoard Board;
+	private ConnectBoard;
 	public ConnectXStats(int w, int x, int a, int z, int y, int b) {
 		subSampleSize = w;
 		winNum = x;
