@@ -1,11 +1,11 @@
 import java.util.Random;
-public class ConnectXStats//Default parameters take ~10 minutes to run.
+public class ConnectXStats//Default parameters take about 10 minutes to run.
 {
 	private Random generator;
 	private int subSampleSize, winNum, boardMultiplier, offsetDivisor;
 	private int winNumMax, boardMultiMax;
 	private int offset;
-	private ConnectBoard;
+	private ConnectX Board;
 	public ConnectXStats(int w, int x, int a, int z, int y, int b) {
 		subSampleSize = w;
 		winNum = x;
@@ -13,7 +13,7 @@ public class ConnectXStats//Default parameters take ~10 minutes to run.
 		offsetDivisor = z;
 		boardMultiplier = y;
 		boardMultiMax = b;
-		Board = new ConnectBoard(x, y, z);
+		Board = new ConnectX(x, y, z);
 		generator = new Random();
 	}
 	
@@ -24,12 +24,12 @@ public class ConnectXStats//Default parameters take ~10 minutes to run.
 		boardMultiplier = y;
 		offset = -1;
 		boardMultiMax = b;
-		Board = new ConnectBoard(x, y, offset);
+		Board = new ConnectX(x, y, offset);
 		generator = new Random();
 	}
 	
 	public void setBoard(int a, int b, int c) {
-		Board = new ConnectBoard(a, b, c);
+		Board = new ConnectX(a, b, c);
 	}
 	
 	public int getSubSampleSize() {
@@ -56,7 +56,7 @@ public class ConnectXStats//Default parameters take ~10 minutes to run.
 		return boardMultiMax;
 	}
 	
-	public ConnectBoard getBoard() {
+	public ConnectX getBoard() {
 		return Board;
 	}
 	
@@ -67,8 +67,8 @@ public class ConnectXStats//Default parameters take ~10 minutes to run.
 	
 	public static void main(String[] args) {
 		final long startTime = System.currentTimeMillis();
-		//ConnectXStats conStats = new ConnectXStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])/**, Integer.parseInt(args[5])**/);
-		ConnectXStats conStats = new ConnectXStats(100, 22, 23, 2, 50);//(sample size, minX, maxX, minMultiplier, maxMultiplier)
+		//ConnectXStats conStats = new ConnectXStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), /**Integer.parseInt(args[5])**/);
+		ConnectXStats conStats = new ConnectXStats(100, 22, 23, 70, 80);//(sample size, minX, maxX, minMultiplier, maxMultiplier)
 		System.out.println("Total Games per subsample: "+ conStats.getSubSampleSize());
 		System.out.println();
 		for(int c=conStats.getWinNum(); c<conStats.getWinNumMax(); c++) {
