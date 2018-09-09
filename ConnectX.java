@@ -2,15 +2,17 @@ import java.util.*;
 public class ConnectX {
 	private int boardSize;
 	private int[][] board;
-	private int winNum;
+	private int winNum, boardMultiplier, boardOffset;
 	public ConnectXPlayer one, two;
 	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames;
 	private Random gen;
 	
-	public ConnectX(int win){
+	public ConnectX(int win, int multiplier, int offset){
 		gen = new Random();
 		winNum=win;
-		boardSize = (2*winNum)-1;
+		boardMultiplier = multiplier;
+		boardOffset = offset;
+		boardSize = (boardMultiplier*winNum)+boardOffset;
 		board = new int[boardSize][boardSize];
 		totalSpaces = boardSize * boardSize;
 		initializeBoard();
@@ -122,6 +124,10 @@ public class ConnectX {
 		return false;
 	}
 	
+	public int getTotalGames() {
+		return totalGames;
+	}
+	
 	public int getAverageMoves() {
 		return (int)(totalMoves/totalGames);
 	}
@@ -178,22 +184,5 @@ public class ConnectX {
 	
 	public int[][] getBoard(){
 		return board;
-	}
-
-	public static void main(String[] args) {
-		for(int c=4; c<25; c++) {
-		ConnectX test = new ConnectX(c);
-		//test.printBoard();
-		while(test.totalGames < 1000000) {
-			test.playerTurn(test.gen.nextInt(test.getBoardSize()), 1, test.one);
-			test.playerTurn(test.gen.nextInt(test.getBoardSize()), 2, test.two);
-		}
-		System.out.println("Stats for Connect"+c);
-		System.out.println("Player one wins: "+ test.one.getWins());
-		System.out.println("Player two wins: "+ test.two.getWins());
-		System.out.println("Draws: "+ (test.totalGames - (test.two.getWins()+test.one.getWins())));
-		System.out.println("Total Games: "+ test.totalGames);
-		System.out.println();
-		}
 	}
 }
