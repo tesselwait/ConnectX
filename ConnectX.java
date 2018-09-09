@@ -6,7 +6,7 @@ public class ConnectX {
 	public ConnectXPlayer one, two;
 	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames;
 	private Random gen;
-	
+	//Curious how different values of X would play out on infinite boards.
 	public ConnectX(int win){
 		gen = new Random();
 		winNum=win;
