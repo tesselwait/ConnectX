@@ -4,14 +4,16 @@ public class ConnectXPlayer {
 	private String name;
 	private ConnectX gameBoard;
 	
+	
 	public ConnectXPlayer(int x, String playerName, ConnectX board) {
-		gameBoard = board;
 		playerNum = x;
 		wins = 0;
 		name = playerName;
+		gameBoard = board;
 	}
 	
-	public int makeMove(int[][] board) {
+	
+	public int makeMove() {
 		return 1;
 	}
 	
@@ -29,5 +31,9 @@ public class ConnectXPlayer {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public ConnectX getBoard() {
+		return gameBoard;
 	}
 }
