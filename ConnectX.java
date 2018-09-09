@@ -181,7 +181,7 @@ public class ConnectX {
 	}
 
 	public static void main(String[] args) {
-		for(int c=4; c<31; c++) {
+		for(int c=4; c<20; c++) {
 		ConnectX test = new ConnectX(c);
 		//test.printBoard();
 		while(test.totalGames < 1000000) {
