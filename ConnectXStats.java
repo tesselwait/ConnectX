@@ -81,7 +81,7 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 						conStats.getBoard().playerTurn(conStats.generator.nextInt(conStats.getBoard().getBoardSize()), 1, conStats.getBoard().one);
 						conStats.getBoard().playerTurn(conStats.generator.nextInt(conStats.getBoard().getBoardSize()), 2, conStats.getBoard().two);
 					}
-					System.out.println("Stats for Connect"+c+" Board size = "+conStats.getBoard().getBoardSize()+".");
+					System.out.println("Connect"+c+" Board size = "+conStats.getBoard().getBoardSize()+".");
 					System.out.println("Player one wins: "+ conStats.getBoard().one.getWins());
 					System.out.println("Player two wins: "+ conStats.getBoard().two.getWins());
 					System.out.println("Draws: "+ (conStats.getBoard().getTotalGames() - (conStats.getBoard().two.getWins()+conStats.getBoard().one.getWins())));
