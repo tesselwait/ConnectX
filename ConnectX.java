@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class ConnectX {
 	private int boardSize;
 	private int[][] board;
