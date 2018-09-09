@@ -90,6 +90,6 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 			/**}**/
 		}
 		final long endTime = System.currentTimeMillis();
-		System.out.println("Total execustion time: " + (endTime - startTime));
+		System.out.println("Total execution time: " + (endTime - startTime));
 	}
 }
