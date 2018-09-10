@@ -66,8 +66,7 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 	
 	
 	public static void main(String[] args) {
-		final long startTime = System.currentTimeMillis();
-		//ConnectXStats conStats = new ConnectXStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), /**Integer.parseInt(args[5])**/);
+		//ConnectXStats conStats = new ConnectXStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])/**, Integer.parseInt(args[5])**/);
 		ConnectXStats conStats = new ConnectXStats(100, 22, 23, 2, 50);//(sample size, minX, maxX, minMultiplier, maxMultiplier)
 		System.out.println("Total Games per subsample: "+ conStats.getSubSampleSize());
 		System.out.println();
@@ -89,7 +88,5 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 				}
 			/**}**/
 		}
-		final long endTime = System.currentTimeMillis();
-		System.out.println("Total execution time: " + (endTime - startTime));
 	}
 }
