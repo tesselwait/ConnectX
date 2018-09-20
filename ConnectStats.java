@@ -24,12 +24,12 @@ public class ConnectStats//Default parameters take about 10 minutes to run.
 		boardMultiplier = y;
 		offset = -1;
 		boardMultiMax = b;
-		Board = new ConnectX(x, y, offset);
+		Board = new Connect(x, y, offset);
 		generator = new Random();
 	}
 	
 	public void setBoard(int a, int b, int c) {
-		Board = new ConnectX(a, b, c);
+		Board = new Connect(a, b, c);
 	}
 	
 	public int getSubSampleSize() {
