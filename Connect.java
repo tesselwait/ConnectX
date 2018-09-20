@@ -1,13 +1,13 @@
 import java.util.*;
-public class ConnectX {
+public class Connect {
 	private int boardSize;
 	private int[][] board;
 	private int winNum, boardMultiplier, boardOffset;
-	public ConnectXPlayer one, two;
+	public ConnectPlayer one, two;
 	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames;
 	private Random gen;
 	
-	public ConnectX(int win, int multiplier, int offset){
+	public Connect(int win, int multiplier, int offset){
 		gen = new Random();
 		winNum=win;
 		boardMultiplier = multiplier;
@@ -16,8 +16,8 @@ public class ConnectX {
 		board = new int[boardSize][boardSize];
 		totalSpaces = boardSize * boardSize;
 		initializeBoard();
-		one = new ConnectXPlayer(1, "one", this);
-		two = new ConnectXPlayer(2, "two", this);
+		one = new ConnectPlayer(1, "one", this);
+		two = new ConnectPlayer(2, "two", this);
 	}
 	
 	public void initializeBoard() {
