@@ -1,23 +1,23 @@
 import java.util.Random;
-public class ConnectXStats//Default parameters take about 10 minutes to run.
+public class ConnectStats//Default parameters take about 10 minutes to run.
 {
 	private Random generator;
 	private int subSampleSize, winNum, boardMultiplier, offsetDivisor;
 	private int winNumMax, boardMultiMax;
 	private int offset;
-	private ConnectX Board;
-	public ConnectXStats(int w, int x, int a, int y, int b, int z) {
+	private Connect Board;
+	public ConnectStats(int w, int x, int a, int y, int b, int z) {
 		subSampleSize = w;
 		winNum = x;
 		winNumMax = a;
 		offsetDivisor = z;
 		boardMultiplier = y;
 		boardMultiMax = b;
-		Board = new ConnectX(x, y, z);
+		Board = new Connect(x, y, z);
 		generator = new Random();
 	}
 	
-	public ConnectXStats(int w, int x, int a, int y, int b) {
+	public ConnectStats(int w, int x, int a, int y, int b) {
 		subSampleSize = w;
 		winNum = x;
 		winNumMax = a;
@@ -56,7 +56,7 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 		return boardMultiMax;
 	}
 	
-	public ConnectX getBoard() {
+	public Connect getBoard() {
 		return Board;
 	}
 	
@@ -66,8 +66,8 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 	
 	
 	public static void main(String[] args) {
-		//ConnectXStats conStats = new ConnectXStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])/**, Integer.parseInt(args[5])**/);
-		ConnectXStats conStats = new ConnectXStats(100, 22, 23, 2, 50);//(sample size, minX, maxX, minMultiplier, maxMultiplier)
+		//ConnectStats conStats = new ConnectStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4])/**, Integer.parseInt(args[5])**/);
+		ConnectStats conStats = new ConnectStats(100, 22, 23, 2, 50);//(sample size, minX, maxX, minMultiplier, maxMultiplier)
 		System.out.println("Total Games per subsample: "+ conStats.getSubSampleSize());
 		System.out.println();
 		for(int c=conStats.getWinNum(); c<conStats.getWinNumMax(); c++) {
