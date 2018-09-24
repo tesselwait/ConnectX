@@ -1,11 +1,11 @@
-public class ConnectPlayer {
+public class ConnectXPlayer {
 	private int playerNum;
 	private int wins;
 	private String name;
-	private Connect gameBoard;
+	private ConnectX gameBoard;
 	
 	
-	public ConnectPlayer(int x, String playerName, Connect board) {
+	public ConnectXPlayer(int x, String playerName, ConnectX board) {
 		playerNum = x;
 		wins = 0;
 		name = playerName;
@@ -33,7 +33,7 @@ public class ConnectPlayer {
 		return name;
 	}
 	
-	public Connect getBoard() {
+	public ConnectX getBoard() {
 		return gameBoard;
 	}
 }
