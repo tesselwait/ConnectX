@@ -27,6 +27,8 @@ public class ConnectPlayer {
 		gameState = gameBoard.getBoard();
 		history.push(cloneGameState(gameState));
 		currentMoves = gameBoard.getLegalMoves();
+		printPotMoves(currentMoves);
+		System.out.println();
 		int nextMove = pickMove();
 		lastMove = new Coordinate(nextMove, gameBoard.findMoveInCol(nextMove).getY());
 		gameState[lastMove.getX()][lastMove.getY()] = playerNum;
@@ -42,11 +44,18 @@ public class ConnectPlayer {
 		return currentMoves[gen.nextInt(currentMoves.length)].getX();
 	}
 	
+	public void printPotMoves(Coordinate[] moves) {
+		for(Coordinate a: moves) {
+			System.out.println("potentialMove: x: "+ a.getX()+" y: "+a.getY());
+		}
+	}
+	
 	public int findEmptySpace() {
 		for(int i=0; i<gameState.length; i++)
-			for(int j=0; j<gameState.length; j++)
+			for(int j=0; j<gameState[0].length; j++)
 				if(gameState[i][j]==0)
-					return i;
+					if(j==0 || (j!=0 && gameState[i][j-1]!=0))
+						return i;
 		return 0;		
 	}
 	
