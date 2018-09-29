@@ -4,7 +4,7 @@ public class Connect {
 	private int[][] board;
 	private int winNum, boardWidth, boardHeight;
 	public ConnectPlayer one, two;
-	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames;
+	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames, draws;
 	private Random gen;
 	private boolean playerBoolean;
 
@@ -16,6 +16,7 @@ public class Connect {
 		boardSize = boardWidth * boardHeight;
 		board = new int[boardWidth][boardHeight];
 		totalSpaces = boardSize;
+		draws = 0;
 		initializeBoard();
 		one = new ConnectPlayer(1, "one", this);
 		two = new ConnectPlayer(2, "two", this);
@@ -31,15 +32,16 @@ public class Connect {
 	}
 	
 	public void runGames(int x) {
-
+		while(totalGames<x) {
+			playerTurn(getCurrentPlayer().makeMove(), getCurrentPlayer());
+		}
 	}
 	
-	public boolean playerTurn(int column, ConnectPlayer curPlayer) {//these are currently broken
+	public boolean playerTurn(int column, ConnectPlayer curPlayer) {//still debugging
 		int player = curPlayer.getPlayerNum();
 		if(openSpaces>0) {
-			playerTurn(getCurrentPlayer().makeMove(), getCurrentPlayer());
 			if(placePiece(column, player)) {
-				gameMoves++;
+				printBoard();
 				getWaitingPlayer().pushGameState(curPlayer.cloneGameState(board));
 				curPlayer.pushGameState(curPlayer.cloneGameState(board));
 				if(checkWin(column, player)){
@@ -49,30 +51,37 @@ public class Connect {
 					return true;
 				}
 				else {
-					//printBoard();
-					nextPlayer();
-					return true;
+				//printBoard();
+				nextPlayer();
+				return true;
 				}
 			}
-			//System.out.println("Invalid move. Making random move.");
-			return randomTurn(getCurrentPlayer());
+			else {
+			randomTurn(/**getCurrentPlayer().makeMove(),**/ getCurrentPlayer());
+			return false;
+			}
 		}
 		else {
 			printDraw();
 			resetGame();
-			return true;
 		}
+		return false;
 	}
 	
 	
-	public boolean randomTurn(ConnectPlayer curPlayer) {//these are currently broken
+	public boolean randomTurn(ConnectPlayer curPlayer) {//still debugging
 		int player = curPlayer.getPlayerNum();
-		int randEmptyCol = gen.nextInt(boardWidth);
-		if(placePiece(randEmptyCol, player)) {
-			gameMoves++;
+		Coordinate[] legalMoves = getLegalMoves();
+		if(legalMoves.length==0) {
+			System.out.println("No valid moves.");
+			printBoard();
+			return false;
+		}
+		int move = legalMoves[gen.nextInt(legalMoves.length)].getX();
+		if(placePiece(move, player)) {
 			getWaitingPlayer().pushGameState(curPlayer.cloneGameState(board));
 			curPlayer.pushGameState(curPlayer.cloneGameState(board));
-			if(checkWin(randEmptyCol, player)) {
+			if(checkWin(move, player)) {
 				win(player);
 				nextPlayer();
 				resetGame();
@@ -85,6 +94,7 @@ public class Connect {
 			}
 		}
 		else
+			System.out.println("Error. Random move did not find a valid move location.");
 			return false;
 	}
 	
@@ -117,8 +127,10 @@ public class Connect {
 	}
 	
 	public boolean isColumnFull(int col) {
-		if(col<0 || col > boardWidth)
+		if(col<0 || col>boardWidth) {
+			System.out.println("Column is not on the board");
 			return true;
+		}
 		if(board[col][boardHeight-1]!=0)
 			return true;
 		return false;
@@ -147,6 +159,7 @@ public class Connect {
 			j--;
 		}
 		board[x][j] = color;
+		gameMoves++;
 		openSpaces--;
 		return true;
 	}
@@ -228,15 +241,17 @@ public class Connect {
 			two.incrementWins();
 			//two.printGameStack();
 		}
-		//printBoard();
+		printBoard();
 	}
 	
 	public void printDraw() {
-		//System.out.println("Game was a draw.");
-		//printBoard();
+		System.out.println("Game was a draw.");
+		printBoard();
+		draws++;
 	}
 	
 	public void resetGame() {
+		printStats();
 		//System.out.println();
 		//System.out.println("New Game");
 		totalMoves+= gameMoves;
@@ -283,6 +298,10 @@ public class Connect {
 		return board;
 	}
 	
+	public int getDraws() {
+		return draws;
+	}
+	
 	public ConnectPlayer getCurrentPlayer() {
 		if(getPlayer())
 			return one;
@@ -305,20 +324,27 @@ public class Connect {
 		playerBoolean = !playerBoolean;
 	}
 	
-	
-	public static void main(String[] args) {
-		for(int c=6; c<12; c++) {
-		Connect test = new Connect(c, 3*c/2, c*3);
-		test.runGames(20);
-		while(test.totalGames < 10) {
-			test.randomTurn(/**test.getCurrentPlayer().makeMove(),**/ test.getCurrentPlayer());
-		}
-		System.out.println("Stats for Connect"+test.winNum+"  on: "+test.boardWidth+"x"+test.boardHeight+" board.");
-		System.out.println("P1 Win: "+ test.one.getWins());
-		System.out.println("P2 Win: "+ test.two.getWins());
-		System.out.println("Draws: "+ (test.totalGames - (test.two.getWins()+test.one.getWins())));
-		System.out.println("Total Games: "+ test.totalGames);
+	public void printStats() {
+		System.out.println("Stats for Connect"+winNum+"  on: "+boardWidth+"x"+boardHeight+" board.");
+		System.out.println("P1 Win: "+ one.getWins());
+		System.out.println("P2 Win: "+ two.getWins());
+		System.out.println("Draws: "+ getDraws());
+		System.out.println("Total Games: "+ totalGames);
 		System.out.println();
+	}
+	public static void main(String[] args) {
+		for(int c=8; c<9; c++) {
+			Connect test = new Connect(c, (5*c)/2, (2*c)-1);
+			test.runGames(5);
+		//while(test.totalGames < 10) {
+			//test.playerTurn(/**test.getCurrentPlayer().makeMove(),**/ test.getCurrentPlayer());
+		//}
+		//System.out.println("Stats for Connect"+test.winNum+"  on: "+test.boardWidth+"x"+test.boardHeight+" board.");
+		//System.out.println("P1 Win: "+ test.one.getWins());
+		//System.out.println("P2 Win: "+ test.two.getWins());
+		//System.out.println("Draws: "+ (test.totalGames - (test.two.getWins()+test.one.getWins())));
+		//System.out.println("Total Games: "+ test.getDraws());
+		//System.out.println();
 		}
 	}
 }
