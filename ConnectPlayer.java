@@ -36,6 +36,7 @@ public class ConnectPlayer {
 	public void pushGameState(int[][] state) {
 		history.push(state);
 	}
+	
 	public int pickMove() {
 		if(currentMoves.length==0)
 			return findEmptySpace();
