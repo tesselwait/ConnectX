@@ -11,7 +11,6 @@ public class ConnectPlayer {
 	private Stack<int[][]> history;
 	private Random gen;
 	
-	
 	public ConnectPlayer(int x, String playerName, Connect board) {
 		playerNum = x;
 		wins = 0;
@@ -21,7 +20,6 @@ public class ConnectPlayer {
 		history = new Stack<int[][]>();
 		gen = new Random();
 	}
-	
 	
 	public int makeMove() {
 		gameState = gameBoard.getBoard();
