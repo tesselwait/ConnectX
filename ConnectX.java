@@ -28,7 +28,7 @@ public class ConnectX {
 		gameMoves=0;
 	}
 	
-	public boolean playerTurn(int column, int player, ConnectxPlayer name) {
+	public boolean playerTurn(int column, int player, ConnectXPlayer name) {
 		if(openSpaces>0) {
 			if(placePiece(column, player)) {
 				gameMoves++;
