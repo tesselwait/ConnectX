@@ -29,7 +29,7 @@ public class ConnectXStats//Default parameters take about 10 minutes to run.
 	}
 	
 	public void setBoard(int a, int b, int c) {
-		Board = new Connect(a, b, c);
+		Board = new ConnectX(a, b, c);
 	}
 	
 	public int getSubSampleSize() {
