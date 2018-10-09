@@ -9,9 +9,11 @@ public class ConnectPlayer {
 	private Coordinate[] currentMoves;
 	private Stack<int[][]> history;
 	private Random gen;
-	public int playerMoves;
+	private boolean isHuman;
+	private int playerMoves;
+	Scanner keyboard;
 	
-	public ConnectPlayer(int x, String playerName, Connect board) {
+	public ConnectPlayer(int x, String playerName, Connect board, boolean human) {
 		playerNum = x;
 		wins = 0;
 		name = playerName;
@@ -19,15 +21,32 @@ public class ConnectPlayer {
 		gameState = board.getBoard();
 		history = new Stack<int[][]>();
 		gen = new Random();
+		isHuman = human;
 		playerMoves=0;
+		keyboard = new Scanner(System.in);
 	}
 	
 	public int makeMove() {
+		if(!isHuman) {
 		gameState = gameBoard.getBoard();
 		currentMoves = gameBoard.getLegalMoves();
 		//printPotMoves(currentMoves);
 		int nextMove = pickMove();
 		return nextMove;
+		}
+		else
+			return humanMove();
+	}
+	
+	public int humanMove() {
+		gameBoard.printBoard();
+		System.out.println("Enter column.");
+		int myint = keyboard.nextInt();
+		if(myint >= 0 && myint < gameBoard.getWidth() && !(gameBoard.isColumnFull(myint)))
+			return myint;
+		else
+			System.out.println("Invalid Move");
+		return 0;
 	}
 	
 	public void pushGameState(int[][] state) {
