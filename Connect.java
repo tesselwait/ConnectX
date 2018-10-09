@@ -1,101 +1,62 @@
 import java.util.*;
 public class Connect {
-	private int boardSize;
 	private int[][] board;
 	private int winNum, boardWidth, boardHeight;
 	public ConnectPlayer one, two;
-	private int openSpaces, totalSpaces, gameMoves, totalMoves, totalGames, draws;
-	private Random gen;
+	private int totalSpaces, gameMoves, totalGames, draws;
 	private boolean playerBoolean;
+	int count;
 
 	public Connect(int win, int width, int height){
-		gen = new Random();
 		winNum=win;
 		boardWidth = width;
 		boardHeight = height;
-		boardSize = boardWidth * boardHeight;
+		totalSpaces = boardWidth * boardHeight;
 		board = new int[boardWidth][boardHeight];
-		totalSpaces = boardSize;
 		draws = 0;
 		initializeBoard();
 		one = new ConnectPlayer(1, "one", this);
 		two = new ConnectPlayer(2, "two", this);
 		playerBoolean = true;
+		count=0;
 	}
 	
 	public void initializeBoard() {
 		for(int i=0; i<boardWidth; i++)
 			for(int j=0; j<boardHeight; j++)
 				board[i][j]=0;
-		openSpaces = totalSpaces;
 		gameMoves=0;
 	}
 	
 	public void runGames(int x) {
 		while(totalGames<x) {
-			playerTurn(getCurrentPlayer().makeMove(), getCurrentPlayer());
+			playerTurn(getCurrentPlayer().makeMove(), getCurrentPlayer().getPlayerNum());
 		}
+		System.out.println("Complete");
 	}
 	
-	public boolean playerTurn(int column, ConnectPlayer curPlayer) {//still debugging
-		int player = curPlayer.getPlayerNum();
-		if(openSpaces>0) {
+	public boolean playerTurn(int column, int player) {
+		if(gameMoves<totalSpaces) {
 			if(placePiece(column, player)) {
-				printBoard();
-				getWaitingPlayer().pushGameState(curPlayer.cloneGameState(board));
-				curPlayer.pushGameState(curPlayer.cloneGameState(board));
+				count++;
+				//printBoard();
+				getWaitingPlayer().pushGameState(getWaitingPlayer().cloneGameState(board));
+				getCurrentPlayer().pushGameState(getCurrentPlayer().cloneGameState(board));
 				if(checkWin(column, player)){
 					win(player);
-					nextPlayer();
-					resetGame();
 					return true;
 				}
-				else {
-				//printBoard();
-				nextPlayer();
-				return true;
-				}
-			}
-			else {
-			randomTurn(/**getCurrentPlayer().makeMove(),**/ getCurrentPlayer());
-			return false;
-			}
-		}
-		else {
-			printDraw();
-			resetGame();
-		}
-		return false;
-	}
-	
-	
-	public boolean randomTurn(ConnectPlayer curPlayer) {//still debugging
-		int player = curPlayer.getPlayerNum();
-		Coordinate[] legalMoves = getLegalMoves();
-		if(legalMoves.length==0) {
-			System.out.println("No valid moves.");
-			printBoard();
-			return false;
-		}
-		int move = legalMoves[gen.nextInt(legalMoves.length)].getX();
-		if(placePiece(move, player)) {
-			getWaitingPlayer().pushGameState(curPlayer.cloneGameState(board));
-			curPlayer.pushGameState(curPlayer.cloneGameState(board));
-			if(checkWin(move, player)) {
-				win(player);
-				nextPlayer();
-				resetGame();
-				return true;
-			}
-			else {
-				//printBoard();
 				nextPlayer();
 				return true;
 			}
+			System.out.println("Place piece returned false.");
 		}
 		else
-			System.out.println("Error. Random move did not find a valid move location.");
-			return false;
+		{
+			draw();
+			return true;
+		}
+		return false;
 	}
 	
 	public int[] getPlayableColumns() {
@@ -127,10 +88,6 @@ public class Connect {
 	}
 	
 	public boolean isColumnFull(int col) {
-		if(col<0 || col>boardWidth) {
-			System.out.println("Column is not on the board");
-			return true;
-		}
 		if(board[col][boardHeight-1]!=0)
 			return true;
 		return false;
@@ -159,8 +116,8 @@ public class Connect {
 			j--;
 		}
 		board[x][j] = color;
+		getCurrentPlayer().incrementMoves();
 		gameMoves++;
-		openSpaces--;
 		return true;
 	}
 	
@@ -227,35 +184,35 @@ public class Connect {
 		return totalGames;
 	}
 	
-	public int getAverageMoves() {
-		return (int)(totalMoves/totalGames);
-	}
-	
 	public void win(int player) {
 		System.out.println("Player: "+player+" wins.");
 		if(player==1) {
 			one.incrementWins();
-			//one.printGameStack();
+			one.printGameStack();
 		}
 		else {
 			two.incrementWins();
-			//two.printGameStack();
+			two.printGameStack();
 		}
 		printBoard();
+		resetGame();
 	}
 	
-	public void printDraw() {
+	public void draw() {
 		System.out.println("Game was a draw.");
 		printBoard();
 		draws++;
+		resetGame();
 	}
 	
 	public void resetGame() {
-		printStats();
-		//System.out.println();
-		//System.out.println("New Game");
-		totalMoves+= gameMoves;
 		totalGames++;
+		printStats();
+		getCurrentPlayer().reset();
+		getWaitingPlayer().reset();
+		System.out.println();
+		System.out.println("New Game");
+		gameMoves = 0;
 		initializeBoard();
 	}
 	
@@ -282,8 +239,8 @@ public class Connect {
 		System.out.println();
 	}
 	
-	public int getBoardSize() {
-		return boardSize;
+	public int getTotalSpaces() {
+		return totalSpaces;
 	}
 	
 	public int getWidth() {
@@ -333,18 +290,9 @@ public class Connect {
 		System.out.println();
 	}
 	public static void main(String[] args) {
-		for(int c=8; c<9; c++) {
-			Connect test = new Connect(c, (5*c)/2, (2*c)-1);
-			test.runGames(5);
-		//while(test.totalGames < 10) {
-			//test.playerTurn(/**test.getCurrentPlayer().makeMove(),**/ test.getCurrentPlayer());
-		//}
-		//System.out.println("Stats for Connect"+test.winNum+"  on: "+test.boardWidth+"x"+test.boardHeight+" board.");
-		//System.out.println("P1 Win: "+ test.one.getWins());
-		//System.out.println("P2 Win: "+ test.two.getWins());
-		//System.out.println("Draws: "+ (test.totalGames - (test.two.getWins()+test.one.getWins())));
-		//System.out.println("Total Games: "+ test.getDraws());
-		//System.out.println();
+		for(int c=5; c<6; c++) {
+			Connect test = new Connect(c, 5*c/2, (3*c/2)+1);
+			test.runGames(10);
 		}
 	}
 }
