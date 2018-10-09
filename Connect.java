@@ -7,7 +7,7 @@ public class Connect {
 	private boolean playerBoolean;
 	int count;
 
-	public Connect(int win, int width, int height){
+	public Connect(int win, int width, int height, int human){
 		winNum=win;
 		boardWidth = width;
 		boardHeight = height;
@@ -15,8 +15,18 @@ public class Connect {
 		board = new int[boardWidth][boardHeight];
 		draws = 0;
 		initializeBoard();
-		one = new ConnectPlayer(1, "one", this);
-		two = new ConnectPlayer(2, "two", this);
+		if(human==1) {
+			one = new ConnectPlayer(1, "one", this, true);
+			two = new ConnectPlayer(2, "two", this, false);
+		}
+		if(human==0) {
+			one = new ConnectPlayer(1, "one", this, false);
+			two = new ConnectPlayer(2, "two", this, false);
+		}
+		if(human==2) {
+			one = new ConnectPlayer(1, "one", this, true);
+			two = new ConnectPlayer(2, "two", this, true);
+		}
 		playerBoolean = true;
 		count=0;
 	}
@@ -122,7 +132,7 @@ public class Connect {
 	
 	public boolean checkWin(int x, int color) {
 		int a = boardHeight-1;
-		while(board[x][a-1]==0)
+		while(a>1 && board[x][a-1]==0)
 			a--;
 		int y=a-1;
 		int vertStreak=1;
@@ -290,7 +300,7 @@ public class Connect {
 	}
 	public static void main(String[] args) {
 		for(int c=5; c<6; c++) {
-			Connect test = new Connect(c, 5*c/2, (3*c/2)+1);
+			Connect test = new Connect(c, 5*c/2, (3*c/2)+1, 0);//(connects to win, board width, board height, human players[0||1||2])
 			test.runGames(10);
 		}
 	}
