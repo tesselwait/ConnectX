@@ -7,9 +7,9 @@ public class ConnectPlayer {
 	private Connect gameBoard;
 	private int[][] gameState;
 	private Coordinate[] currentMoves;
-	private Coordinate lastMove;
 	private Stack<int[][]> history;
 	private Random gen;
+	public int playerMoves;
 	
 	public ConnectPlayer(int x, String playerName, Connect board) {
 		playerNum = x;
@@ -19,17 +19,14 @@ public class ConnectPlayer {
 		gameState = board.getBoard();
 		history = new Stack<int[][]>();
 		gen = new Random();
+		playerMoves=0;
 	}
 	
 	public int makeMove() {
 		gameState = gameBoard.getBoard();
-		history.push(cloneGameState(gameState));
 		currentMoves = gameBoard.getLegalMoves();
-		printPotMoves(currentMoves);
-		System.out.println();
+		//printPotMoves(currentMoves);
 		int nextMove = pickMove();
-		lastMove = new Coordinate(nextMove, gameBoard.findMoveInCol(nextMove).getY());
-		gameState[lastMove.getX()][lastMove.getY()] = playerNum;
 		return nextMove;
 	}
 	
@@ -44,9 +41,11 @@ public class ConnectPlayer {
 	}
 	
 	public void printPotMoves(Coordinate[] moves) {
+		System.out.println("pot moves player: " +playerNum);
 		for(Coordinate a: moves) {
 			System.out.println("potentialMove: x: "+ a.getX()+" y: "+a.getY());
 		}
+		System.out.println("end pot moves");
 	}
 	
 	public int findEmptySpace() {
@@ -58,8 +57,21 @@ public class ConnectPlayer {
 		return 0;		
 	}
 	
+	public void reset() {
+		history = new Stack<int[][]>();
+		playerMoves=0;
+	}
+	
 	public void incrementWins() {
 		wins++;
+	}
+	
+	public void incrementMoves() {
+		playerMoves++;
+	}
+	
+	public void resetPlayerMoves() {
+		playerMoves=0;
 	}
 	
 	public int getPlayerNum() {
@@ -68,6 +80,10 @@ public class ConnectPlayer {
 	
 	public int getWins() {
 		return wins;
+	}
+	
+	public int getPlayerMoves() {
+		return playerMoves;
 	}
 	
 	public String getName() {
