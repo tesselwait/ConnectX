@@ -56,7 +56,6 @@ public class Connect {
 			draw();
 			return true;
 		}
-		return false;
 	}
 	
 	public int[] getPlayableColumns() {
