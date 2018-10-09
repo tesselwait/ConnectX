@@ -49,7 +49,7 @@ public class Connect {
 				nextPlayer();
 				return true;
 			}
-			System.out.println("Place piece returned false.");
+			return false;
 		}
 		else
 		{
