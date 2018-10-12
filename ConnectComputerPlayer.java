@@ -1,4 +1,4 @@
-//Old algorithm implemented on arbitrary board parameters without gridworld.
+//Old algorithm implemented on arbitrary board parameters.
 import java.util.*;
 public class ConnectComputerPlayer {
 	private int playerNum;
