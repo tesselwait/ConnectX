@@ -234,7 +234,7 @@ public class ConnectComputerPlayer {
 				int[] nextStreaks = gameBoard.getStreaks(new Coordinate(firstPotentialMoves[i].getX(), firstPotentialMoves[i].getY()+1), gameBoard.getWaitingPlayer().getPlayerNum());
 				boolean threeInRow = false;
 				for(Integer num : nextStreaks){
-					if(num.intValue() >= gameBoard.getWinNum()-1){
+					if(num.intValue() >= gameBoard.getWinNum()-2){
 						threeInRow = true;
 					}
 				}
