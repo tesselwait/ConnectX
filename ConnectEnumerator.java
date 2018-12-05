@@ -1,6 +1,6 @@
 public class ConnectEnumerator {
+	//Enumerates set of all possible winning combinations given board width, height, and win parameters.
 	private Coordinate[][] winSet;
-	
 	public ConnectEnumerator() {
 		winSet= null;
 	}
