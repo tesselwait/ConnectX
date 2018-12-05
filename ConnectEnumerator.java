@@ -35,7 +35,7 @@ public class ConnectEnumerator {
 					}
 				r++;
 			}
-			System.out.println("r: "+ r);
+			//System.out.println("r: "+ r);
 		}
 		//System.out.println("end second set");
 	
