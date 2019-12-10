@@ -191,14 +191,14 @@ public class ConnectComputerPlayer {
 		}
 		  for(Coordinate location : potentialMoves){
 			if(location.getY()<gameBoard.getHeight()-2)
-				if(!gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), getPlayerNum()))
-					if(gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum()))
-						if(gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+2), gameBoard.getWaitingPlayer().getPlayerNum()))
+				if(!gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum()))
+					if(gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), getPlayerNum()))
+						if(gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+2), getPlayerNum()))
 							return location;
 		  }
 		  for(Coordinate location : potentialMoves) {
 			if(location.getY()<gameBoard.getHeight()-1) { 
-		      if(!gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), getPlayerNum())){
+		      if(!gameBoard.checkWin(new Coordinate(location.getX(), location.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum())){
 		    	gameBoard.getBoard()[location.getX()][location.getY()]=getPlayerNum();  
 		    	Coordinate[] potentialMoves2 = new Coordinate[gameBoard.getWidth()];
 		    	for(int i = 0; i < gameBoard.getWidth(); i++){
@@ -211,7 +211,7 @@ public class ConnectComputerPlayer {
 		        	if (loc2!=null) {
 		        		if (gameBoard.checkWin(loc2, gameBoard.getWaitingPlayer().getPlayerNum())){
 		        			winLocs++;
-		        			if (loc2.getY()<gameBoard.getHeight()-1 && (gameBoard.checkWin(new Coordinate(loc2.getX(), loc2.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum())) || (winLocs >= 2)){
+		        			if (loc2.getY()<gameBoard.getHeight()-1 && (gameBoard.checkWin(new Coordinate(loc2.getX(), loc2.getY()+1), getPlayerNum())) || (winLocs >= 2)){
 		        				gameBoard.getBoard()[location.getX()][ location.getY()]=0;
 		        				return location;
 		        			}
