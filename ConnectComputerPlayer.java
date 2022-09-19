@@ -267,7 +267,7 @@ public class ConnectComputerPlayer {
 				int aboveStreakFactorialSum = sumFactorials(aboveStreaks); 
 				int[] aboveOpStreaks = gameBoard.getStreaks(new Coordinate(location.getX(), location.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum());
 				int aboveOpStreakFactorialSum = sumFactorials(aboveOpStreaks);
-				aboveStreakTotal = aboveStreakFactorialSum - aboveOpStreakFactorialSum;
+				aboveStreakTotal = aboveStreakFactorialSum + (int)(aboveOpStreakFactorialSum * 0.8) ;
 			}
 			tempStreakTotal -= (int)(aboveStreakTotal / 1.0/*5D*/);
 			if(tempStreakTotal > greatestStreakTotal){
