@@ -262,12 +262,12 @@ public class ConnectComputerPlayer {
 			if(myStreakSum >= 2)
 				tempStreakTotal += myStreakSum;
 			int aboveStreakTotal = 0;
-			if(location.getY() > 0){
+			if(location.getY() < gameBoard.getHeight()-1){
 				int[] aboveStreaks = gameBoard.getStreaks(new Coordinate(location.getX(), location.getY()+1), getPlayerNum());
 				int aboveStreakFactorialSum = sumFactorials(aboveStreaks); 
 				int[] aboveOpStreaks = gameBoard.getStreaks(new Coordinate(location.getX(), location.getY()+1), gameBoard.getWaitingPlayer().getPlayerNum());
 				int aboveOpStreakFactorialSum = sumFactorials(aboveOpStreaks);
-				aboveStreakTotal = aboveStreakFactorialSum + aboveOpStreakFactorialSum;
+				aboveStreakTotal = aboveStreakFactorialSum - aboveOpStreakFactorialSum;
 			}
 			tempStreakTotal -= (int)(aboveStreakTotal / 1.0/*5D*/);
 			if(tempStreakTotal > greatestStreakTotal){
